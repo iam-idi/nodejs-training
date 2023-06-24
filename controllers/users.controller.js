@@ -1,8 +1,8 @@
-const users = require('../models/users');
+const usersService = require('../services/users.service');
 
 module.exports = {
   create: async (req, res) => {
-    const response = await users.create(req.body);
+    const response = await usersService.create(req.body);
     if (response.error) {
       return res.status(400).json(response.error.message);
     } else {
