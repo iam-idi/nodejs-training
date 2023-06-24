@@ -23,32 +23,35 @@ module.exports = {
   },
 
   getOne: async (req, res) => {
-    const response = await users.findOne(+req.params.id);
-     if (response.error) {
-      return res.status(400).json(error.message);
-     } else {
+    const response = await usersService.findOne(+req.params.id);
+    if (response.error) {
+      return res.status(400).json(response.error.message);
+    } else {
+      console.log(response.result);
       res.status(200).json(response.result);
-     }
+    }
   },
 
   update: async (req, res) => {
     const id = +req.params.id;
     const body = req.body;
-    const response = await users.update(id, body);
-    if (responsse.error) {
-      return res.status(400).json(error.message);
+    const response = await usersService.update(+req.params.id, body);
+    if (response.error) {
+      return res.status(400).json(response.error.message);
     } else {
-      res.status(200).json(result);
+      console.log(response.result);
+      res.status(200).json(response.result);
     }
   },
 
   delete: async (req, res) => {
     const id = +req.params.id;
-    const response = await users.delete(id);
+    const response = await usersService.delete(id);
     if (response.error) {
-      return res.status(400).json(error.message);
+      return res.status(400).json(response.error.message);
     } else {
-      return res.status(200).json(result);
+      console.log(response.result);
+      res.status(200).json(response.result);
     }
   },
 };
