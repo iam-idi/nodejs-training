@@ -22,33 +22,33 @@ module.exports = {
     }
   },
 
-  getOne: (req, res) => {
-    users.findOne(+req.params.id, (error, result) => {
-      if (error) {
-        return res.status(400).json(error.message);
-      }
-      res.status(200).json(result);
-    });
+  getOne: async (req, res) => {
+    const response = await users.findOne(+req.params.id);
+     if (response.error) {
+      return res.status(400).json(error.message);
+     } else {
+      res.status(200).json(response.result);
+     }
   },
 
-  update: (req, res) => {
+  update: async (req, res) => {
     const id = +req.params.id;
     const body = req.body;
-    users.update(id, body, (error, result) => {
-      if (error) {
-        return res.status(400).json(error.message);
-      }
+    const response = await users.update(id, body);
+    if (responsse.error) {
+      return res.status(400).json(error.message);
+    } else {
       res.status(200).json(result);
-    });
+    }
   },
 
-  delete: (req, res) => {
+  delete: async (req, res) => {
     const id = +req.params.id;
-    users.delete(id, (error, result) => {
-      if (error) {
-        return res.status(400).json(error.message);
-      }
-      res.status(200).json(result);
-    });
+    const response = await users.delete(id);
+    if (response.error) {
+      return res.status(400).json(error.message);
+    } else {
+      return res.status(200).json(result);
+    }
   },
 };

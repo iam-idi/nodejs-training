@@ -1,4 +1,4 @@
-const conn = require('../helpers/connection');
+const conn = require("../helpers/connection");
 
 module.exports = {
   create: async (body) => {
@@ -6,7 +6,7 @@ module.exports = {
       const db = await conn();
       const values = Object.values(body);
       const result = await db.query(
-        'INSERT INTO users(name,email,phone,address) VALUES (?,?,?,?)',
+        "INSERT INTO users(name,email,phone,address) VALUES (?,?,?,?)",
         values
       );
       return { result };
@@ -18,7 +18,7 @@ module.exports = {
   find: async () => {
     try {
       const db = await conn();
-      const [rows, fields] = await db.query('SELECT * FROM users');
+      const [rows, fields] = await db.query("SELECT * FROM users");
 
       return { result: rows };
     } catch (error) {
@@ -26,33 +26,36 @@ module.exports = {
     }
   },
 
-  findOne: (id, callback) => {
-    conn.query('SELECT * FROM users WHERE id = ?', id, (err, res) => {
-      if (err) {
-        callback(err, null);
-      } else {
-        callback(null, res);
-      }
-    });
+  findOne: async (id) => {
+    try {
+      const db = await conn();
+      const [rows, fields] = await db.query("SELECT * FROM users WHERE id = ?",id);
+
+      return { result: rows };
+    } catch (error) {
+      return { error };
+    }
   },
 
-  update: (id, body, callback) => {
-    conn.query('UPDATE users SET ? WHERE id = ?', [body, id], (error, res) => {
-      if (error) {
-        callback(error, null);
-      } else {
-        callback(null, res);
-      }
-    });
+  update: async (id, body) => {
+    try {
+      const db = await conn();
+      const [rows, fields] = await db.query("UPDATE users SET ? WHERE id = ?", [body,id]);
+
+      return { result: rows };
+    } catch (error) {
+      return { error };
+    }
   },
 
-  delete: (id, callback) => {
-    conn.query('DELETE FROM users WHERE id = ?', id, (error, res) => {
-      if (error) {
-        callback(error, null);
-      } else {
-        callback(null, res);
-      }
-    });
-  },
+  delete: async (id) => {
+    try {
+      const db = await conn();
+      const [rows, fields] = await db.query("DELETE FROM users WHERE id = ?",id);
+
+      return { result: rows };
+    } catch (error) {
+      return { error };
+    }
+  }
 };
