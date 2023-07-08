@@ -8,8 +8,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-//connect to database
-require('./helpers/connection')();
+
 
 // Register routers
 require('./routes/users.routes')(app);

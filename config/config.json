@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "idi21550",
-    "database": "makaranta2",
+    "database": "makaranta",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },

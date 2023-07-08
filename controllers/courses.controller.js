@@ -1,51 +1,57 @@
-const users = require('../models/course');
+const coursesService = require('../services/courses.service');
 
 module.exports = {
-  create: (req, res) => {
-    users.create(req.body, (error, result) => {
-      if (error) {
-        return res.status(400).json(error.message);
-      }
-      res.status(201).json(result);
-    });
+  create: async (req, res) => {
+    const response = await coursesService.create(req.body);
+    if (response.error) {
+      return res.status(400).json(response.error.message);
+    } else {
+      res.status(201).json(response.result);
+    }
   },
 
-  getAll: (req, res) => {
-    users.find((error, result) => {
-      if (error) {
-        return res.status(400).json(error.message);
-      }
-      res.status(200).json(result);
-    });
+  getAll: async (req, res) => {
+    console.log('i was in the controller');
+    const response = await coursesService.find();
+
+    if (response.error) {
+      return res.status(400).json(response.error.message);
+    } else {
+      console.log(response.result);
+      res.status(200).json(response.result);
+    }
   },
 
-  getOne: (req, res) => {
-    users.findOne(+req.params.id, (error, result) => {
-      if (error) {
-        return res.status(400).json(error.message);
-      }
-      res.status(200).json(result);
-    });
+  getOne: async (req, res) => {
+    const response = await coursesService.findOne(+req.params.id);
+    if (response.error) {
+      return res.status(400).json(response.error.message);
+    } else {
+      console.log(response.result);
+      res.status(200).json(response.result);
+    }
   },
 
-  update: (req, res) => {
+  update: async (req, res) => {
     const id = +req.params.id;
     const body = req.body;
-    users.update(id, body, (error, result) => {
-      if (error) {
-        return res.status(400).json(error.message);
-      }
-      res.status(200).json(result);
-    });
+    const response = await coursesService.update(+req.params.id, body);
+    if (response.error) {
+      return res.status(400).json(response.error.message);
+    } else {
+      console.log(response.result);
+      res.status(200).json(response.result);
+    }
   },
 
-  delete: (req, res) => {
+  delete: async (req, res) => {
     const id = +req.params.id;
-    users.delete(id, (error, result) => {
-      if (error) {
-        return res.status(400).json(error.message);
-      }
-      res.status(200).json(result);
-    });
+    const response = await coursesService.delete(id);
+    if (response.error) {
+      return res.status(400).json(response.error.message);
+    } else {
+      console.log(response.result);
+      res.status(200).json(response.result);
+    }
   },
 };
