@@ -71,8 +71,20 @@ module.exports = {
   },
 
   update: async (id, body) => {
+
+    let payload;
     try {
-      const user = await User.update(body, { where: { id: id } });
+      const { password, ...rest} = body;
+
+      if(password){
+        const salt = bcrypt.genSaltSync(12);
+       const hashedPassword = bcrypt.hashSync(password, salt);
+        payload = { ...rest, password: hashedPassword}
+      }else{
+        payload = {...rest}
+      }
+
+      const user = await User.update(payload, { where: { id: id } });
       return { result: user };
     } catch (error) {
       return { error };
