@@ -1,4 +1,5 @@
 const { Course } = require('../models');
+
 module.exports = {
   create: async (body) => {
     try {

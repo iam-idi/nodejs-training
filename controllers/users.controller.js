@@ -10,14 +10,22 @@ module.exports = {
     }
   },
 
+  login: async (req, res) => {
+    const response = await usersService.login(req.body);
+    if (response.error) {
+      return res.status(400).json(response.error.message);
+    } else {
+      res.status(201).json(response.result);
+    }
+  },
+
   getAll: async (req, res) => {
-    console.log('i was in the controller');
+    console.log('inside controller', req.user);
     const response = await usersService.find();
 
     if (response.error) {
       return res.status(400).json(response.error.message);
     } else {
-      console.log(response.result);
       res.status(200).json(response.result);
     }
   },
@@ -35,7 +43,7 @@ module.exports = {
   update: async (req, res) => {
     const id = +req.params.id;
     const body = req.body;
-    const response = await usersService.update(+req.params.id, body);
+    const response = await usersService.update(id, body);
     if (response.error) {
       return res.status(400).json(response.error.message);
     } else {

@@ -1,21 +1,14 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class course extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-    }
+  class Course extends Model {
+    static associate(models) {}
   }
-  course.init(
+  Course.init(
     {
       title: DataTypes.STRING,
       code: DataTypes.STRING,
-      credit_unit: DataTypes.FLOAT,
+      creditUnit: DataTypes.INTEGER,
     },
     {
       sequelize,
@@ -24,5 +17,5 @@ module.exports = (sequelize, DataTypes) => {
       tableName: 'courses',
     }
   );
-  return course;
+  return Course;
 };
